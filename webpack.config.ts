@@ -1,69 +1,25 @@
 import path from "path";
-import webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-
-type Mode = "production" | "development";
+import { Configuration } from "webpack";
+import { buildWebpack } from "./config/build/buildWebpack";
+import { BuildMode, BuildOptions } from "./config/build/types/types";
 
 interface EnvVariables {
-  mode: Mode;
+  mode: BuildMode;
   port: number;
 }
 
 export default (env: EnvVariables) => {
-  const isDev = env.mode === "development";
-  const isProd = env.mode === "production";
-
-  const config: webpack.Configuration = {
+  const options: BuildOptions = {
     mode: env.mode ?? "development",
-    entry: path.resolve(__dirname, "src", "index.tsx"),
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: "ts-loader",
-          exclude: /node_modules/,
-        },
-        {
-          test: /\.s[ac]ss$/i,
-          use: [
-            // Creates `style` nodes from JS strings
-            isProd ? MiniCssExtractPlugin.loader : "style-loader",
-            // Translates CSS into CommonJS
-            "css-loader",
-            // Compiles Sass to CSS
-            "sass-loader",
-          ],
-        },
-      ],
+    paths: {
+      entry: path.resolve(__dirname, "src", "index.tsx"),
+      output: path.resolve(__dirname, "dist"),
+      html: path.resolve(__dirname, "public", "index.html"),
     },
-    resolve: {
-      extensions: [".tsx", ".ts", ".js"],
-    },
-    output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "[name].[contenthash].js",
-      clean: true,
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public", "index.html"),
-      }),
-      isProd &&
-        new MiniCssExtractPlugin({
-          filename: "css/[name].[contenthash].css",
-          chunkFilename: "css/[id].[contenthash].css",
-        }),
-    ].filter(Boolean),
-    devtool: isDev && "inline-source-map",
-    devServer: isDev
-      ? {
-          port: env.port ?? 3000,
-          open: true,
-        }
-      : undefined,
+    port: env.port ?? 3000,
   };
+
+  const config: Configuration = buildWebpack(options);
 
   return config;
 };
