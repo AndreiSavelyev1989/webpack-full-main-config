@@ -5,10 +5,26 @@ import imagePng from "@/assets/rocket.png";
 import imageJpg from "@/assets/tiger.jpg";
 import ImageSvg from "@/assets/freecodecamp.svg";
 
+//Tree shaking
+//if we call in our component
+function TODO() {
+  console.log("TODO");
+}
+
 export const App = () => {
   const [count, setCount] = useState(0);
+  TODO();
+  if (__PLATFORM__ === "mobile") {
+    return <div>IS MOBILE PLATFORM</div>;
+  }
+
+  if (__PLATFORM__ === "desktop") {
+    return <div>IS DESKTOP PLATFORM</div>;
+  }
+
   return (
     <div>
+      <h1>__PLATFORM__: {__PLATFORM__}</h1>
       <Link to={"/about"}>About</Link>
       <br />
       <Link to={"/shop"}>Shop</Link>
@@ -26,7 +42,7 @@ export const App = () => {
 
       <div>
         <label>Svg image</label>
-        <ImageSvg className={styles.icon} width={"50px"} height={"50px"}/>
+        <ImageSvg className={styles.icon} width={"50px"} height={"50px"} />
       </div>
 
       <h1 className={styles.value}>{count}</h1>
