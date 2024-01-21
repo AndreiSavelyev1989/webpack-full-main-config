@@ -7,13 +7,13 @@ import ImageSvg from "@/assets/freecodecamp.svg";
 
 //Tree shaking
 //if we call in our component
-function TODO() {
+function TODO(a:number) {
   console.log("TODO");
 }
 
 export const App = () => {
   const [count, setCount] = useState(0);
-  TODO();
+  TODO("32");
   if (__PLATFORM__ === "mobile") {
     return <div>IS MOBILE PLATFORM</div>;
   }
