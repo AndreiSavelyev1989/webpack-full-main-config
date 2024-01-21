@@ -13,14 +13,14 @@ function TODO(a:number) {
 
 export const App = () => {
   const [count, setCount] = useState(0);
-  TODO("32");
-  if (__PLATFORM__ === "mobile") {
-    return <div>IS MOBILE PLATFORM</div>;
-  }
+  // TODO("32");
+  // if (__PLATFORM__ === "mobile") {
+  //   return <div>IS MOBILE PLATFORM</div>;
+  // }
 
-  if (__PLATFORM__ === "desktop") {
-    return <div>IS DESKTOP PLATFORM</div>;
-  }
+  // if (__PLATFORM__ === "desktop") {
+  //   return <div>IS DESKTOP PLATFORM</div>;
+  // }
 
   return (
     <div>
@@ -42,7 +42,7 @@ export const App = () => {
 
       <div>
         <label>Svg image</label>
-        <ImageSvg className={styles.icon} width={"50px"} height={"50px"} />
+        <ImageSvg className={styles.icon} width={"60px"} height={"50px"} />
       </div>
 
       <h1 className={styles.value}>{count}</h1>
