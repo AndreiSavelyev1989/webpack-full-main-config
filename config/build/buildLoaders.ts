@@ -2,6 +2,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { ModuleOptions } from "webpack";
 import { BuildOptions } from "./types/types";
 import ReactRefreshTypeScript from "react-refresh-typescript";
+import { buildBabelLoader } from "./babel/buildBabelLoader";
 
 export function buildLoader(options: BuildOptions): ModuleOptions["rules"] {
   const isProd = options.mode === "production";
@@ -72,21 +73,7 @@ export function buildLoader(options: BuildOptions): ModuleOptions["rules"] {
     ],
   };
 
-  const babelLoader = {
-    test: /\.tsx?$/,
-    exclude: /node_modules/,
-    use: {
-      loader: "babel-loader",
-      //если не используем babel.config.json, то можно указать presets прямо здесь
-      // options: {
-      //   presets: [
-      //     "@babel/preset-env",
-      //     "@babel/preset-typescript",
-      //     ["@babel/preset-react", { runtime: "automatic" }],
-      //   ],
-      // },
-    },
-  };
+  const babelLoader = buildBabelLoader(options);
 
   return [
     scssLoader,

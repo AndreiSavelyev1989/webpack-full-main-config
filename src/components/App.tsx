@@ -7,7 +7,7 @@ import ImageSvg from "@/assets/freecodecamp.svg";
 
 //Tree shaking
 //if we call in our component
-function TODO(a:number) {
+function TODO(a: number) {
   console.log("TODO");
 }
 
@@ -23,8 +23,8 @@ export const App = () => {
   // }
 
   return (
-    <div>
-      <h1>__PLATFORM__: {__PLATFORM__}</h1>
+    <div data-test-id={"App.DataTestId"}>
+      <h1 data-test-id={"Platform"}>__PLATFORM__: {__PLATFORM__}</h1>
       <Link to={"/about"}>About</Link>
       <br />
       <Link to={"/shop"}>Shop</Link>
