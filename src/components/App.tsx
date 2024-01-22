@@ -7,8 +7,12 @@ import ImageSvg from "@/assets/freecodecamp.svg";
 
 //Tree shaking
 //if we call in our component
-function TODO(a: number) {
-  console.log("TODO");
+function TODO() {
+  TODO2();
+}
+
+function TODO2() {
+  throw new Error();
 }
 
 export const App = () => {
@@ -21,6 +25,11 @@ export const App = () => {
   // if (__PLATFORM__ === "desktop") {
   //   return <div>IS DESKTOP PLATFORM</div>;
   // }
+
+  const handleClick = () => {
+    // setCount((prev) => prev + 1)
+    TODO();
+  };
 
   return (
     <div data-test-id={"App.DataTestId"}>
@@ -46,10 +55,7 @@ export const App = () => {
       </div>
 
       <h1 className={styles.value}>{count}</h1>
-      <button
-        className={styles.button}
-        onClick={() => setCount((prev) => prev + 1)}
-      >
+      <button className={styles.button} onClick={handleClick}>
         Click
       </button>
       <Outlet />
